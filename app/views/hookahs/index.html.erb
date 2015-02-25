@@ -16,6 +16,8 @@
       <tr>
         <td><%= hookah.title %></td>
         <td><%= hookah.description %></td>
+        <td><%= pluralize(hookah.votes.count, "vote") %></td>
+        <td><%= button_to '+1', upvote_hookah_path(hookah), method: :post %></td>
         <td><%= link_to 'Show', hookah %></td>
         <td><%= link_to 'Edit', edit_hookah_path(hookah) %></td>
         <td><%= link_to 'Destroy', hookah, method: :delete, data: { confirm: 'Are you sure?' } %></td>

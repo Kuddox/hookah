@@ -28,7 +28,7 @@ class HookahsController < ApplicationController
 
     respond_to do |format|
       if @hookah.save
-        format.html { redirect_to @hookah, notice: 'Hookah was successfully created.' }
+        format.html { redirect_to hookahs_path, notice: 'Hookah was successfully created.' }
         format.json { render :show, status: :created, location: @hookah }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class HookahsController < ApplicationController
   def update
     respond_to do |format|
       if @hookah.update(hookah_params)
-        format.html { redirect_to @hookah, notice: 'Hookah was successfully updated.' }
+        format.html { redirect_to hookahs_path, notice: 'Hookah was successfully updated.' }
         format.json { render :show, status: :ok, location: @hookah }
       else
         format.html { render :edit }
@@ -59,6 +59,12 @@ class HookahsController < ApplicationController
       format.html { redirect_to hookahs_url, notice: 'Hookah was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def upvote
+  	@hookah = Hookah.find(params[:id])
+  	@hookah.votes.create
+  	redirect_to(hookahs_path)
   end
 
   private
