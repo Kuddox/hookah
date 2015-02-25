@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @hookah.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @hookah.description %>
+</p>
+
+<%= link_to 'Edit', edit_hookah_path(@hookah) %> |
+<%= link_to 'Back', hookahs_path %>
