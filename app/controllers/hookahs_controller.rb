@@ -1,15 +1,14 @@
 class HookahsController < ApplicationController
-  before_action :set_hookah, only: [:show, :edit, :update, :destroy]
+  before_action :set_hookah, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
 
   # GET /hookahs
   # GET /hookahs.json
   def index
-    @hookahs = Hookah.all
+    @hookahs = Hookah.order(votes: :desc)
   end
 
-  # GET /hookahs/1
-  # GET /hookahs/1.json
   def show
+  	@review = @hookah.reviews.build
   end
 
   # GET /hookahs/new
@@ -21,49 +20,43 @@ class HookahsController < ApplicationController
   def edit
   end
 
-  # POST /hookahs
-  # POST /hookahs.json
   def create
     @hookah = Hookah.new(hookah_params)
 
     respond_to do |format|
-      if @hookah.save
-        format.html { redirect_to hookahs_path, notice: 'Hookah was successfully created.' }
-        format.json { render :show, status: :created, location: @hookah }
-      else
-        format.html { render :new }
-        format.json { render json: @hookah.errors, status: :unprocessable_entity }
-      end
+    	if @hookah.save
+    		format.html { redirect_to hookahs_path, notice: 'Hookah was successfully created.'}
+    		format.json { render :show, status: :created, location: @hookah }
+    	else
+    		format.html { render :new }
+    		format.json { render json: @hookah.errors, status: :unprocessable_entity }
+    	end
     end
   end
 
-  # PATCH/PUT /hookahs/1
-  # PATCH/PUT /hookahs/1.json
   def update
-    respond_to do |format|
-      if @hookah.update(hookah_params)
-        format.html { redirect_to hookahs_path, notice: 'Hookah was successfully updated.' }
-        format.json { render :show, status: :ok, location: @hookah }
-      else
-        format.html { render :edit }
-        format.json { render json: @hookah.errors, status: :unprocessable_entity }
-      end
-    end
+  	if @hookah.update_attributes(hookah_params)
+  		redirect_to root_path
+  	else
+  		render :edit
+  	end
   end
 
-  # DELETE /hookahs/1
-  # DELETE /hookahs/1.json
   def destroy
-    @hookah.destroy
-    respond_to do |format|
-      format.html { redirect_to hookahs_url, notice: 'Hookah was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  	@hookah.destroy
+  	redirect_to root_path
   end
 
   def upvote
   	@hookah = Hookah.find(params[:id])
   	@hookah.votes.create
+  	redirect_to(hookahs_path)
+  end
+
+  def downvote
+  	@hookah = Hookah.find(params[:id])
+  	@hookah.votes -= 1
+  	@hookah.save
   	redirect_to(hookahs_path)
   end
 

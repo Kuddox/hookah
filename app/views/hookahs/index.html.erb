@@ -1,26 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Hookahs</h1>
+<h1>Hookah Creations</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
+      <th>Name</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @hookahs.each do |hookah| %>
-      <tr>
-        <td><%= hookah.title %></td>
-        <td><%= hookah.description %></td>
-        <td><%= pluralize(hookah.votes.count, "vote") %></td>
+  	<% @hookahs.each do |hookah| %>
+    	<tr>
+    		<td><%= hookah.title %></td>
+    		<td><%= hookah.description %></td>
+    		<td><%= pluralize(hookah.votes.count, "vote") %></td>
         <td><%= button_to '+1', upvote_hookah_path(hookah), method: :post %></td>
-        <td><%= link_to 'Show', hookah %></td>
-        <td><%= link_to 'Edit', edit_hookah_path(hookah) %></td>
-        <td><%= link_to 'Destroy', hookah, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', hookah, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
   </tbody>

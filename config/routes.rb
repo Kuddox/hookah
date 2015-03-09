@@ -1,19 +1,16 @@
 Rails.application.routes.draw do
+  devise_for :users
+  root 'static#home'
+  get '/about', to: 'static#about', as: :about
+
 	resources :hookahs do
 		member do
 			post 'upvote'
+			post 'downvote'
 		end
 	end
 
-	root 'static#home'
 end
-
-
-
-
-
-
-
 
 
 
